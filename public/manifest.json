@@ -1,0 +1,19 @@
+{
+    "name": "حاسبة الهيكل الخرساني",
+      "short_name": "حاسبة الخرسانة",
+        "description": "تطبيق حساب كميات الهيكل الخرساني - المهندس محمد لطف السميعي",
+          "start_url": "/",
+            "display": "standalone",
+              "orientation": "portrait",
+                "theme_color": "#1e3a5f",
+                  "background_color": "#f1f5f9",
+                    "lang": "ar",
+                      "dir": "rtl",
+                        "icons": [
+                            {
+                                  "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>",
+                                        "sizes": "100x100",
+                                              "type": "image/svg+xml"
+                                                  }
+                                                    ]
+                                                    }
