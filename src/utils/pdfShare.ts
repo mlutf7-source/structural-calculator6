@@ -24,7 +24,7 @@ const safeName = (name: string) =>
                               clone.style.overflow = 'visible';
                                 clone.style.background = '#ffffff';
                                   clone.style.padding = '20px';
-                                  clone.style.transform = 'translateX(18px)';
+                                  clone.style.transform = 'translateX(20px)';
                                     clone.style.direction = 'rtl';
                                       clone.style.fontFamily = 'Cairo, Arial, sans-serif';
 
