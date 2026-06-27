@@ -18,12 +18,13 @@ const safeName = (name: string) =>
 
                       const clone = element.cloneNode(true) as HTMLElement;
 
-                        clone.style.width = '760px';
-                          clone.style.maxWidth = '760px';
+                        clone.style.width = '794px';
+                          clone.style.maxWidth = '794px';
                             clone.style.height = 'auto';
                               clone.style.overflow = 'visible';
                                 clone.style.background = '#ffffff';
                                   clone.style.padding = '20px';
+                                  clone.style.transform = 'translateX(18px)';
                                     clone.style.direction = 'rtl';
                                       clone.style.fontFamily = 'Cairo, Arial, sans-serif';
 
@@ -36,7 +37,7 @@ const safeName = (name: string) =>
                                                     document.body.appendChild(wrapper);
 
                                                       const opt = {
-                                                          margin: 12,
+                                                          margin: 8,
                                                               filename: `${safeName(title)}.pdf`,
                                                                   image: { type: 'jpeg', quality: 0.98 },
                                                                       html2canvas: {
