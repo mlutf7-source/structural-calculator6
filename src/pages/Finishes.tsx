@@ -379,13 +379,79 @@ return (
       <tbody>
         <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي البلك</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalBlocksPerFloor}</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalBlocksAll}</td></tr>
         <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalCementPerFloor} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalCementAll} كيس</td></tr>
-        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalSandPerFloor)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalSandAll)} م³</td></tr>
-        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalAggregatePerFloor)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalAggregateAll)} م³</td></tr>
+        <tr>
+  <td
+    style={{
+      padding: '6px 5px',
+      border: '1px solid #ccc',
+      fontWeight: 700,
+    }}
+  >
+    إجمالي الرمل
+  </td>
+
+  <td
+    style={{
+      padding: '6px 5px',
+      border: '1px solid #ccc',
+      textAlign: 'center',
+    }}
+  >
+    {fmtNum(
+      (Math.ceil(
+        (Math.ceil(
+          (netOuterWall / FL + netInnerWall / FL) / 0.08
+        ) /
+          1000) *
+          20 +
+          Math.ceil(
+            ((netOuterWall / FL +
+              (netInnerWall / FL) * 2 +
+              floorArea) /
+              100) *
+              20
+          )
+      ) *
+        0.1 +
+        (tileMortarVolume / FL) * 0.5 +
+        (hasMarble === 'yes' ? marbleSand : 0))
+    )}{' '}
+    م³
+  </td>
+
+  <td
+    style={{
+      padding: '6px 5px',
+      border: '1px solid #ccc',
+      textAlign: 'center',
+    }}
+  >
+    {fmtNum(
+      (Math.ceil(
+        (Math.ceil(
+          (netOuterWall + netInnerWall) / 0.08
+        ) /
+          1000) *
+          20 +
+          Math.ceil(
+            ((netOuterWall +
+              netInnerWall * 2 +
+              totalArea) /
+              100) *
+              20
+          )
+      ) *
+        0.1 +
+        tileMortarVolume * 0.5 +
+        (hasMarble === 'yes' ? marbleSand * FL : 0))
+    )}{' '}
+    م³
+  </td>
+</tr> <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalAggregatePerFloor)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalAggregateAll)} م³</td></tr>
       </tbody>
     </table>
   </div>
 </div>
-
       <div className="no-print" style={{ display: "flex", gap: "8px", padding: "12px 0" }}>
         <button onClick={() => window.print()} style={{ flex: 1, padding: "12px", border: "none", borderRadius: "10px", background: "#00509e", color: "white", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>🖨️ طباعة PDF</button>
       </div>
