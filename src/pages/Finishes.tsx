@@ -368,24 +368,23 @@ return (
           </table>
         </div>
       </div>
-
-      <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
-        <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
-          <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>📊 إجمالي الكميات</span>
-        </div>
-        <div className="model-body" style={{ padding: "10px 12px" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem", tableLayout: "fixed" }}>
-            <colgroup><col style={{ width: "60%" }} /><col style={{ width: "20%" }} /><col style={{ width: "20%" }} /></colgroup>
-            <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
-            <tbody>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي البلك</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(netOuterWall / FL / 0.08) + Math.ceil(netInnerWall / FL / 0.08)}</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(netOuterWall / 0.08) + Math.ceil(netInnerWall / 0.08)}</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7) + Math.ceil(((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + stairLanding + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * 0.04 * 6)) + (hasMarble === "yes" ? marbleCement : 0))} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{(Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7) + Math.ceil(((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + stairLanding + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * 0.04 * 6))) * FL + (hasMarble === "yes" ? marbleCement * FL : 0))} كيس</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(((Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 100) * 20))) * 0.1 + (tileMortarVolume / FL) * 0.5 + (hasMarble === "yes" ? marbleSand : 0))} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(((Math.ceil(((Math.ceil((netOuterWall + netInnerWall) / 0.08) / 1000) * 20) + Math.ceil((((netOuterWall + netInnerWall * 2 + totalArea) / 100) * 20))) * 0.1 + tileMortarVolume * 0.5 + (hasMarble === "yes" ? marbleSand * FL : 0)))} م³</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(hasMarble === "yes" ? marbleAggregate : 0)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(hasMarble === "yes" ? marbleAggregate * FL : 0)} م³</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+<div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
+  <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
+    <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>📊 إجمالي الكميات</span>
+  </div>
+  <div className="model-body" style={{ padding: "10px 12px" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem", tableLayout: "fixed" }}>
+      <colgroup><col style={{ width: "60%" }} /><col style={{ width: "20%" }} /><col style={{ width: "20%" }} /></colgroup>
+      <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
+      <tbody>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي البلك</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalBlocksPerFloor}</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalBlocksAll}</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalCementPerFloor} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{totalCementAll} كيس</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalSandPerFloor)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalSandAll)} م³</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalAggregatePerFloor)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalAggregateAll)} م³</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
       <div className="no-print" style={{ display: "flex", gap: "8px", padding: "12px 0" }}>
         <button onClick={() => window.print()} style={{ flex: 1, padding: "12px", border: "none", borderRadius: "10px", background: "#00509e", color: "white", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>🖨️ طباعة PDF</button>
