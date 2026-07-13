@@ -2852,6 +2852,850 @@ return (
             <td
               style={{
                padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      textAlign: "center",
+                    }}
+                  >
+                    {marbleCement * FL} كيس
+                  </td>
+                </tr>
+
+                <tr>
+                  <td
+                    style={{
+                      padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      fontWeight: 700,
+                    }}
+                  >
+                    الرمل
+                  </td>
+
+                  <td
+                    style={{
+                      padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      textAlign: "center",
+                    }}
+                  >
+                    {fmtNum(marbleSand)} م³
+                  </td>
+
+                  <td
+                    style={{
+                      padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      textAlign: "center",
+                    }}
+                  >
+                    {fmtNum(
+                      marbleSand * FL
+                    )}{" "}
+                    م³
+                  </td>
+                </tr>
+
+                <tr>
+                  <td
+                    style={{
+                      padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      fontWeight: 700,
+                    }}
+                  >
+                    الركام
+                  </td>
+
+                  <td
+                    style={{
+                      padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      textAlign: "center",
+                    }}
+                  >
+                    {fmtNum(
+                      marbleAggregate
+                    )}{" "}
+                    م³
+                  </td>
+
+                  <td
+                    style={{
+                      padding: "6px 5px",
+                      border:
+                        "1px solid #ccc",
+                      textAlign: "center",
+                    }}
+                  >
+                    {fmtNum(
+                      marbleAggregate * FL
+                    )}{" "}
+                    م³
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}      {/* التكاليف الإضافية */}
+
+      <div
+        className="model-card"
+        style={{
+          border: "1px solid #ddd",
+          borderRadius: "12px",
+          overflow: "hidden",
+          background: "white",
+        }}
+      >
+        <div
+          className="model-head"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "10px 12px",
+            background: "#f8fafc",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 700,
+              color: "#003366",
+              fontSize: "0.9rem",
+            }}
+          >
+            🔧 التكاليف الإضافية
+          </span>
+        </div>
+
+        <div
+          className="model-body"
+          style={{ padding: "10px 12px" }}
+        >
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "0.7rem",
+            }}
+          >
+            <thead>
+              <tr
+                style={{
+                  background: "#003366",
+                  color: "white",
+                }}
+              >
+                <th
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                  }}
+                >
+                  البند
+                </th>
+
+                <th
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                  }}
+                >
+                  لدور واحد
+                </th>
+
+                <th
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                  }}
+                >
+                  الكلي ({FL} أدوار)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  الحمامات
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {BA}
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {totalBathrooms}
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  المطابخ
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {KI}
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {totalKitchens}
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  الأبواب
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {DR}
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {totalDoors}
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  النوافذ
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {WN}
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {totalWindows}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* الإجماليات النهائية */}
+
+      <div
+        className="model-card"
+        style={{
+          border: "1px solid #ddd",
+          borderRadius: "12px",
+          overflow: "hidden",
+          background: "white",
+        }}
+      >
+        <div
+          className="model-head"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "10px 12px",
+            background: "#f8fafc",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 700,
+              color: "#003366",
+              fontSize: "0.9rem",
+            }}
+          >
+            📊 إجمالي الكميات
+          </span>
+        </div>
+
+        <div
+          className="model-body"
+          style={{ padding: "10px 12px" }}
+        >
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "0.7rem",
+            }}
+          >
+            <thead>
+              <tr
+                style={{
+                  background: "#003366",
+                  color: "white",
+                }}
+              >
+                <th
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                  }}
+                >
+                  البند
+                </th>
+
+                <th
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                  }}
+                >
+                  لدور واحد
+                </th>
+
+                <th
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                  }}
+                >
+                  الكلي ({FL} أدوار)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  إجمالي البلك
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {Math.ceil(
+                    netOuterWall / FL / 0.08
+                  ) +
+                    Math.ceil(
+                      netInnerWall / FL / 0.08
+                    )}
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {Math.ceil(
+                    netOuterWall / 0.08
+                  ) +
+                    Math.ceil(
+                      netInnerWall / 0.08
+                    )}
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  إجمالي الأسمنت
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {Math.ceil(
+                    (
+                      Math.ceil(
+                        (netOuterWall / FL +
+                          netInnerWall / FL) /
+                          0.08
+                      ) /
+                      1000
+                    ) * 20
+                  ) +
+                    Math.ceil(
+                      (
+                        netOuterWall / FL +
+                        (netInnerWall / FL) * 2 +
+                        floorArea
+                      ) /
+                        7
+                    ) +
+                    Math.ceil(
+                      (
+                        floorArea -
+                        (
+                          grossWallArea /
+                            FL /
+                            FH +
+                          innerWallArea /
+                            FL /
+                            FH
+                        ) *
+                          0.2 -
+                        6 +
+                        (bathPerimeter * FH - 2) *
+                          BA +
+                        (kitchenPerimeter * FH - 2) *
+                          KI
+                      ) *
+                        0.04 *
+                        6
+                    ) +
+                    (
+                      hasMarble === "yes"
+                        ? marbleCement
+                        : 0
+                    )}{" "}
+                  كيس
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {(
+                    Math.ceil(
+                      (
+                        Math.ceil(
+                          (netOuterWall / FL +
+                            netInnerWall / FL) /
+                            0.08
+                        ) /
+                        1000
+                      ) * 20
+                    ) +
+                    Math.ceil(
+                      (
+                        netOuterWall / FL +
+                        (netInnerWall / FL) * 2 +
+                        floorArea
+                      ) /
+                        7
+                    ) +
+                    Math.ceil(
+                      (
+                        floorArea -
+                        (
+                          grossWallArea /
+                            FL /
+                            FH +
+                          innerWallArea /
+                            FL /
+                            FH
+                        ) *
+                          0.2 -
+                        6 +
+                        (bathPerimeter * FH - 2) *
+                          BA +
+                        (kitchenPerimeter * FH - 2) *
+                          KI
+                      ) *
+                        0.04 *
+                        6
+                    )
+                  ) *
+                    FL +
+                    (
+                      hasMarble === "yes"
+                        ? marbleCement * FL
+                        : 0
+                    )}{" "}
+                  كيس
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  إجمالي الرمل
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(
+                    (
+                      Math.ceil(
+                        (
+                          Math.ceil(
+                            (netOuterWall /
+                              FL +
+                              netInnerWall /
+                              FL) /
+                              0.08
+                          ) /
+                          1000
+                        ) * 20
+                      ) +
+                        Math.ceil(
+                          (
+                            (
+                              netOuterWall /
+                                FL +
+                              (netInnerWall /
+                                FL) *
+                                2 +
+                              floorArea
+                            ) /
+                              100
+                          ) *
+                            20
+                        )
+                    ) *
+                      0.1 +
+                      (tileMortarVolume /
+                        FL) *
+                        0.5 +
+                      (
+                        hasMarble === "yes"
+                          ? marbleSand
+                          : 0
+                      )
+                  )}{" "}
+                  م³
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(
+                    (
+                      Math.ceil(
+                        (
+                          Math.ceil(
+                            (netOuterWall +
+                              netInnerWall) /
+                              0.08
+                          ) /
+                          1000
+                        ) * 20
+                      ) +
+                        Math.ceil(
+                          (
+                            (
+                              netOuterWall +
+                              netInnerWall *
+                                2 +
+                              totalArea
+                            ) /
+                              100
+                          ) *
+                            20
+                        )
+                    ) *
+                      0.1 +
+                      tileMortarVolume *
+                        0.5 +
+                      (
+                        hasMarble === "yes"
+                          ? marbleSand * FL
+                          : 0
+                      )
+                  )}{" "}
+                  م³
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  إجمالي الركام
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(
+                    hasMarble === "yes"
+                      ? marbleAggregate
+                      : 0
+                  )}{" "}
+                  م³
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(
+                    hasMarble === "yes"
+                      ? marbleAggregate * FL
+                      : 0
+                  )}{" "}
+                  م³
+                </td>
+              </tr>
+
+              {/* 🆕 إجمالي بلاط السلم في الإجماليات النهائية */}
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  بلاط السلم (درج)
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {stairSteps} درج
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {stairSteps * FL} درج
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    fontWeight: 700,
+                  }}
+                >
+                  بلاط السلم (بسطة)
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(stairLanding)} م²
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
+                    border: "1px solid #ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(stairLanding * FL)} م²
+                </td>
+              </tr>
+
+              <tr
+                style={{
+                  background: "#003366",
+                  color: "#FFD700",
+                  fontWeight: 700,
+                }}
+              >
+                <td
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                    textAlign: "center",
+                  }}
+                >
+                  إجمالي البلاط
+                </td>
+
+                <td
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(
+                    floorArea -
+                      (
+                        grossWallArea /
+                          FL /
+                          FH +
+                        innerWallArea /
+                          FL /
+                          FH
+                      ) *
+                        0.2 -
+                      6 +
+                      (bathPerimeter * FH - 2) *
+                        BA +
+                      (kitchenPerimeter * FH - 2) *
+                        KI +
+                      stairLanding
+                  )}{" "}
+                  م² + {stairSteps} درج
+                </td>
+
+                <td
+                  style={{
+                    padding: "8px 5px",
+                    border: "1px solid #003366",
+                    textAlign: "center",
+                  }}
+                >
+                  {fmtNum(
+                    (
+                      floorArea -
+                      (
+                        grossWallArea /
+                          FL /
+                                           FH +
+                          innerWallArea /
+                            FL /
+                            FH
+                        ) *
+                          0.2 -
+                        6 +
+                        (bathPerimeter * FH - 2) *
+                          BA +
+                        (kitchenPerimeter * FH - 2) *
+                          KI
+                      ) *
+                        0.04 *
+                        6
+                    ) +
+                    (
+                      hasMarble === "yes"
+                        ? marbleCement
+                        : 0
+                    )}{" "}
+                  كيس
+                </td>
+
+                <td
+                  style={{
+                    padding: "6px 5px",
                     border: "1px solid #ccc",
                     textAlign: "center",
                   }}
