@@ -700,8 +700,25 @@ const reset = () => {
               </tr>
               <tr>
                 <td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الرمل</td>
-                <td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(((Math.ceil((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil(((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 100) * 20)) * 0.1 + (tileMortarVolume / FL) * 0.5 + (hasMarble === "yes" ? marbleSand : 0))} م³</td>
-                <td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(((Math.ceil((Math.ceil((netOuterWall + netInnerWall) / 0.08) / 1000) * 20) + Math.ceil(((netOuterWall + netInnerWall * 2 + totalArea) / 100) * 20)) * 0.1 + tileMortarVolume * 0.5 + (hasMarble === "yes" ? marbleSand * FL : 0))} م³</td>
+                <td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>
+  {fmtNum(
+    ((Math.ceil((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) +
+      Math.ceil(((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 100) * 20)) *
+      0.1 +
+      (tileMortarVolume / FL) * 0.5 +
+      (hasMarble === "yes" ? marbleSand : 0))
+  )} م³
+</td>
+
+<td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>
+  {fmtNum(
+    ((Math.ceil((Math.ceil((netOuterWall + netInnerWall) / 0.08) / 1000) * 20) +
+      Math.ceil(((netOuterWall + netInnerWall * 2 + totalArea) / 100) * 20)) *
+      0.1 +
+      tileMortarVolume * 0.5 +
+      (hasMarble === "yes" ? marbleSand * FL : 0))
+  )} م³
+</td>
               </tr>
               <tr>
                 <td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td>
