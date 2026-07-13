@@ -54,7 +54,7 @@ const Finishes: React.FC = () => {
   const floorArea = L * W;
   const totalArea = floorArea * FL;
   const perimeter = 2 * (L + W);
-  const grossWallArea = perimeter * FH * FL;const innerWallArea = (L * W / 2.5) * FH * FL;                   // الجدران الداخلية
+  const grossWallArea = perimeter * FH * FL;const innerWallArea = (L * W / 2.5) * FH * FL;
 const totalColumns = Math.ceil(floorArea / 8);
 const outerColumns = Math.ceil(perimeter / 3.5);
 const innerColumns = totalColumns - outerColumns;
@@ -64,10 +64,8 @@ const innerColumnArea = innerColumns * columnAreaPerFloor * FL;
 const netOuterWall = grossWallArea - WN * WA * FL - outerColumnArea;
 const netInnerWall = innerWallArea - DR * DA * FL - innerColumnArea;
 
-const stairSteps = Math.ceil(FH / 0.17);                           // عدد الدرج لكل دور
-const stairLanding = 3;                                             // مساحة البسطة (م²) لكل دور
-
-const bathPerimeter = 2 * (n(bathLength) + n(bathWidth));
+const stairSteps = Math.ceil(FH / 0.17);
+const stairLanding = 3;const bathPerimeter = 2 * (n(bathLength) + n(bathWidth));
 const kitchenPerimeter = 2 * (n(kitchenLength) + n(kitchenWidth));
 const marbleArea = hasMarble === "yes" ? grossWallArea / FL : 0;
 const marbleConcrete = marbleArea * 0.04;
@@ -78,7 +76,7 @@ const totalBathrooms = BA * FL;
 const totalKitchens = KI * FL;
 const totalDoors = DR * FL;
 const totalWindows = WN * FL;
-const tileMortarVolume = ((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * FL * 0.04);
+const tileMortarVolume = ((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + stairLanding + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * FL * 0.04);
 const laborBlockOuter = grossWallArea;
 const laborBlockInner = innerWallArea;
 const laborPlasterOuter = grossWallArea;
@@ -172,40 +170,41 @@ return (
             <Num id="fin-doors" go="fin-doorarea" label="العدد/دور" value={doors} set={setDoors} unit="باب" />
             <Num id="fin-doorarea" go="fin-bathrooms" label="المساحة" value={doorArea} set={setDoorArea} unit="م²" />
           </div>
-        </div>    <SectionTitle>الحمامات والمطابخ في الدور الواحد</SectionTitle>
-    <div style={{ border: "1px solid #d8e1ea", borderRadius: "10px", padding: "10px", marginBottom: "10px", background: "#fafbfc" }}>
-      <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#003366", marginBottom: "6px" }}>🛁 الحمامات</div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
-        <Num id="fin-bathrooms" go="fin-bathlength" label="العدد" value={bathrooms} set={setBathrooms} unit="حمام" />
-        <Num id="fin-bathlength" go="fin-bathwidth" label="الطول" value={bathLength} set={setBathLength} unit="م" />
-        <Num id="fin-bathwidth" go="fin-kitchens" label="العرض" value={bathWidth} set={setBathWidth} unit="م" />
+        </div>
+        <SectionTitle>الحمامات والمطابخ في الدور الواحد</SectionTitle>
+        <div style={{ border: "1px solid #d8e1ea", borderRadius: "10px", padding: "10px", marginBottom: "10px", background: "#fafbfc" }}>
+          <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#003366", marginBottom: "6px" }}>🛁 الحمامات</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+            <Num id="fin-bathrooms" go="fin-bathlength" label="العدد" value={bathrooms} set={setBathrooms} unit="حمام" />
+            <Num id="fin-bathlength" go="fin-bathwidth" label="الطول" value={bathLength} set={setBathLength} unit="م" />
+            <Num id="fin-bathwidth" go="fin-kitchens" label="العرض" value={bathWidth} set={setBathWidth} unit="م" />
+          </div>
+        </div>
+        <div style={{ border: "1px solid #d8e1ea", borderRadius: "10px", padding: "10px", marginBottom: "10px", background: "#fafbfc" }}>
+          <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#003366", marginBottom: "6px" }}>🍳 المطابخ</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+            <Num id="fin-kitchens" go="fin-kitlength" label="العدد" value={kitchens} set={setKitchens} unit="مطبخ" />
+            <Num id="fin-kitlength" go="fin-kitwidth" label="الطول" value={kitchenLength} set={setKitchenLength} unit="م" />
+            <Num id="fin-kitwidth" label="العرض" value={kitchenWidth} set={setKitchenWidth} unit="م" />
+          </div>
+        </div>
+        <SectionTitle>🏛️ الرخام</SectionTitle>
+        <div style={{ marginBottom: "12px", display: "flex", gap: "16px" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", fontSize: "0.8rem" }}>
+            <input type="radio" checked={hasMarble === "no"} onChange={() => setHasMarble("no")} />
+            <span>لا يوجد</span>
+          </label>
+          <label style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", fontSize: "0.8rem" }}>
+            <input type="radio" checked={hasMarble === "yes"} onChange={() => setHasMarble("yes")} />
+            <span>يوجد رخام</span>
+          </label>
+        </div>
+        <div className="no-print" style={{ display: "flex", gap: "8px" }}>
+          <button onClick={reset} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "10px", background: "#dc3545", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>تفريغ المدخلات</button>
+          <button onClick={calculate} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "10px", background: "#00509e", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>حساب الكميات</button>
+        </div>
       </div>
-    </div>
-    <div style={{ border: "1px solid #d8e1ea", borderRadius: "10px", padding: "10px", marginBottom: "10px", background: "#fafbfc" }}>
-      <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#003366", marginBottom: "6px" }}>🍳 المطابخ</div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
-        <Num id="fin-kitchens" go="fin-kitlength" label="العدد" value={kitchens} set={setKitchens} unit="مطبخ" />
-        <Num id="fin-kitlength" go="fin-kitwidth" label="الطول" value={kitchenLength} set={setKitchenLength} unit="م" />
-        <Num id="fin-kitwidth" label="العرض" value={kitchenWidth} set={setKitchenWidth} unit="م" />
-      </div>
-    </div>
-    <SectionTitle>🏛️ الرخام</SectionTitle>
-    <div style={{ marginBottom: "12px", display: "flex", gap: "16px" }}>
-      <label style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", fontSize: "0.8rem" }}>
-        <input type="radio" checked={hasMarble === "no"} onChange={() => setHasMarble("no")} />
-        <span>لا يوجد</span>
-      </label>
-      <label style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", fontSize: "0.8rem" }}>
-        <input type="radio" checked={hasMarble === "yes"} onChange={() => setHasMarble("yes")} />
-        <span>يوجد رخام</span>
-      </label>
-    </div>
-    <div className="no-print" style={{ display: "flex", gap: "8px" }}>
-      <button onClick={reset} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "10px", background: "#dc3545", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>تفريغ المدخلات</button>
-      <button onClick={calculate} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "10px", background: "#00509e", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>حساب الكميات</button>
-    </div>
-  </div>
-</div><div style={{ pageBreakBefore: "always" }}>
+    </div><div style={{ pageBreakBefore: "always" }}>
   <SectionTitle>📏 ملخص مساحات الجدران</SectionTitle>
   <div className="results-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "12px" }}>
     <div className="result-tile" style={{ border: "1px solid #7c3aed", borderRadius: "10px", padding: "10px 8px", textAlign: "center", background: "#faf5ff" }}>
@@ -277,86 +276,83 @@ return (
       </tbody>
     </table>
   </div>
-</div>      <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
-        <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
-          <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🏗️ بند التلييس (المحارة)</span>
-        </div>
-        <div className="model-body" style={{ padding: "10px 12px" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
-            <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
-            <tbody>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>تلييس خارجي (وجه واحد)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall / FL)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>تلييس داخلي (وجهين)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netInnerWall / FL) * 2)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netInnerWall * 2)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>تلييس الأسقف</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(floorArea)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalArea)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>أكياس الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7)}</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil((netOuterWall + netInnerWall * 2 + totalArea) / 7)}</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(Math.ceil(((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 100) * 20) * 0.1)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(Math.ceil(((netOuterWall + netInnerWall * 2 + totalArea) / 100) * 20) * 0.1)} م³</td></tr>
-              <tr style={{ background: "#003366", color: "#FFD700", fontWeight: 700 }}><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>إجمالي التلييس</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea)} م²</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall + netInnerWall * 2 + totalArea)} م²</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+</div><div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
+  <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
+    <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🏗️ بند التلييس (المحارة)</span>
+  </div>
+  <div className="model-body" style={{ padding: "10px 12px" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
+      <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
+      <tbody>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>تلييس خارجي (وجه واحد)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall / FL)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>تلييس داخلي (وجهين)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netInnerWall / FL) * 2)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netInnerWall * 2)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>تلييس الأسقف</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(floorArea)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalArea)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>أكياس الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7)}</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil((netOuterWall + netInnerWall * 2 + totalArea) / 7)}</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(Math.ceil(((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 100) * 20) * 0.1)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(Math.ceil(((netOuterWall + netInnerWall * 2 + totalArea) / 100) * 20) * 0.1)} م³</td></tr>
+        <tr style={{ background: "#003366", color: "#FFD700", fontWeight: 700 }}><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>إجمالي التلييس</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea)} م²</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall + netInnerWall * 2 + totalArea)} م²</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-      <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
-        <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
-          <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🎨 بند الطلاء (الدهانات)</span>
-        </div>
-        <div className="model-body" style={{ padding: "10px 12px" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
-            <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
-            <tbody>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>طلاء الجدران</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall / FL + (netInnerWall / FL) * 2)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall + netInnerWall * 2)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>طلاء الأسقف</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(floorArea)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalArea)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>المعجون</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) * 0.5)} كجم</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall + netInnerWall * 2 + totalArea) * 0.5)} كجم</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>البرايمر</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 10)} لتر</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall + netInnerWall * 2 + totalArea) / 10)} لتر</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الطلاء</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 20)} جالون</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall + netInnerWall * 2 + totalArea) / 20)} جالون</td></tr>
-              <tr style={{ background: "#003366", color: "#FFD700", fontWeight: 700 }}><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>إجمالي الطلاء</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea)} م²</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall + netInnerWall * 2 + totalArea)} م²</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+<div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
+  <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
+    <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🎨 بند الطلاء (الدهانات)</span>
+  </div>
+  <div className="model-body" style={{ padding: "10px 12px" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
+      <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
+      <tbody>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>طلاء الجدران</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall / FL + (netInnerWall / FL) * 2)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(netOuterWall + netInnerWall * 2)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>طلاء الأسقف</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(floorArea)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(totalArea)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>المعجون</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) * 0.5)} كجم</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall + netInnerWall * 2 + totalArea) * 0.5)} كجم</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>البرايمر</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 10)} لتر</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall + netInnerWall * 2 + totalArea) / 10)} لتر</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الطلاء</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 20)} جالون</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((netOuterWall + netInnerWall * 2 + totalArea) / 20)} جالون</td></tr>
+        <tr style={{ background: "#003366", color: "#FFD700", fontWeight: 700 }}><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>إجمالي الطلاء</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea)} م²</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(netOuterWall + netInnerWall * 2 + totalArea)} م²</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-      {/* بند البلاط المعدل */}
-      <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
-        <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
-          <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🟫 بند البلاط</span>
-        </div>
-        <div className="model-body" style={{ padding: "10px 12px" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
-            <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
-            <tbody>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط الأرضيات</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6) * FL)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط السلم (درج + بسطة)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{stairSteps} درج + {stairLanding} م² بسطة</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{stairSteps * FL} درج + {stairLanding * FL} م² بسطة</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط جدران الحمامات</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((bathPerimeter * FH - 2) * BA)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((bathPerimeter * FH - 2) * BA * FL)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط جدران المطابخ</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((kitchenPerimeter * FH - 2) * KI)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((kitchenPerimeter * FH - 2) * KI * FL)} م²</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>أسمنت المونة</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil((tileMortarVolume / FL) * 6)} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(tileMortarVolume * 6)} كيس</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>رمل المونة</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((tileMortarVolume / FL) * 0.5)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(tileMortarVolume * 0.5)} م³</td></tr>
-              <tr style={{ background: "#003366", color: "#FFD700", fontWeight: 700 }}><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>إجمالي البلاط</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI + stairLanding)} م² + {stairSteps} درج</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * FL + stairLanding * FL)} م² + {stairSteps * FL} درج</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+<div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
+  <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
+    <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🟫 بند البلاط</span>
+  </div>
+  <div className="model-body" style={{ padding: "10px 12px" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
+      <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
+      <tbody>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط الأرضيات</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6) * FL)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط السلم (درج + بسطة)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{stairSteps} درج + {stairLanding} م² بسطة</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{stairSteps * FL} درج + {stairLanding * FL} م² بسطة</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط جدران الحمامات</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((bathPerimeter * FH - 2) * BA)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((bathPerimeter * FH - 2) * BA * FL)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>بلاط جدران المطابخ</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((kitchenPerimeter * FH - 2) * KI)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((kitchenPerimeter * FH - 2) * KI * FL)} م²</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>أسمنت المونة</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil((tileMortarVolume / FL) * 6)} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(tileMortarVolume * 6)} كيس</td></tr>
+        <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>رمل المونة</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum((tileMortarVolume / FL) * 0.5)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(tileMortarVolume * 0.5)} م³</td></tr>
+        <tr style={{ background: "#003366", color: "#FFD700", fontWeight: 700 }}><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>إجمالي البلاط</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum(floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI + stairLanding)} م² + {stairSteps} درج</td><td style={{ padding: "8px 5px", border: "1px solid #003366", textAlign: "center" }}>{fmtNum((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * FL + stairLanding * FL)} م² + {stairSteps * FL} درج</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-      {hasMarble === "yes" && (
-        <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
-          <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
-            <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🏛️ بند الرخام</span>
-          </div>
-          <div className="model-body" style={{ padding: "10px 12px" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
-              <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
-              <tbody>
-                <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>مساحة الرخام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleArea)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleArea * FL)} م²</td></tr>
-                <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>خرسانة (4 سم)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleConcrete)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleConcrete * FL)} م³</td></tr>
-                <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>أسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{marbleCement} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{marbleCement * FL} كيس</td></tr>
-                <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleSand)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleSand * FL)} م³</td></tr>
-                <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleAggregate)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleAggregate * FL)} م³</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
+{hasMarble === "yes" && (
+  <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
+    <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
+      <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🏛️ بند الرخام</span>
+    </div>
+    <div className="model-body" style={{ padding: "10px 12px" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.7rem" }}>
+        <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
+        <tbody>
+          <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>مساحة الرخام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleArea)} م²</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleArea * FL)} م²</td></tr>
+          <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>خرسانة (4 سم)</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleConcrete)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleConcrete * FL)} م³</td></tr>
+          <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>أسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{marbleCement} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{marbleCement * FL} كيس</td></tr>
+          <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleSand)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleSand * FL)} م³</td></tr>
+          <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleAggregate)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(marbleAggregate * FL)} م³</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+)}      <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
         <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
           <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>🔧 التكاليف الإضافية</span>
         </div>
@@ -373,7 +369,6 @@ return (
         </div>
       </div>
 
-      {/* الإجماليات النهائية – البلك، الأسمنت، الرمل، الركام فقط */}
       <div className="model-card" style={{ border: "1px solid #ddd", borderRadius: "12px", overflow: "hidden", background: "white" }}>
         <div className="model-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#f8fafc" }}>
           <span style={{ fontWeight: 700, color: "#003366", fontSize: "0.9rem" }}>📊 إجمالي الكميات</span>
@@ -384,43 +379,16 @@ return (
             <thead><tr style={{ background: "#003366", color: "white" }}><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>البند</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>لدور واحد</th><th style={{ padding: "8px 5px", border: "1px solid #003366" }}>الكلي ({FL} أدوار)</th></tr></thead>
             <tbody>
               <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي البلك</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(netOuterWall / FL / 0.08) + Math.ceil(netInnerWall / FL / 0.08)}</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(netOuterWall / 0.08) + Math.ceil(netInnerWall / 0.08)}</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7) + Math.ceil(((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * 0.04 * 6)) + (hasMarble === "yes" ? marbleCement : 0))} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{(Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7) + Math.ceil(((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * 0.04 * 6))) * FL + (hasMarble === "yes" ? marbleCement * FL : 0))} كيس</td></tr>
+              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الأسمنت</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7) + Math.ceil(((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + stairLanding + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * 0.04 * 6)) + (hasMarble === "yes" ? marbleCement : 0))} كيس</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{(Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 7) + Math.ceil(((floorArea - ((grossWallArea / FL / FH + innerWallArea / FL / FH) * 0.2) - 6 + stairLanding + (bathPerimeter * FH - 2) * BA + (kitchenPerimeter * FH - 2) * KI) * 0.04 * 6))) * FL + (hasMarble === "yes" ? marbleCement * FL : 0))} كيس</td></tr>
               <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الرمل</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(((Math.ceil(((Math.ceil((netOuterWall / FL + netInnerWall / FL) / 0.08) / 1000) * 20) + Math.ceil((((netOuterWall / FL + (netInnerWall / FL) * 2 + floorArea) / 100) * 20))) * 0.1 + (tileMortarVolume / FL) * 0.5 + (hasMarble === "yes" ? marbleSand : 0)))} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(((Math.ceil(((Math.ceil((netOuterWall + netInnerWall) / 0.08) / 1000) * 20) + Math.ceil((((netOuterWall + netInnerWall * 2 + totalArea) / 100) * 20))) * 0.1 + tileMortarVolume * 0.5 + (hasMarble === "yes" ? marbleSand * FL : 0)))} م³</td></tr>
-              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(hasMarble === "yes" ? marbleAggregate : 0)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(hasMarble === "yes" ? marbleAggregate * FL : 0)} م³
-                </td>
-              </tr>
+              <tr><td style={{ padding: "6px 5px", border: "1px solid #ccc", fontWeight: 700 }}>إجمالي الركام</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(hasMarble === "yes" ? marbleAggregate : 0)} م³</td><td style={{ padding: "6px 5px", border: "1px solid #ccc", textAlign: "center" }}>{fmtNum(hasMarble === "yes" ? marbleAggregate * FL : 0)} م³</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* أزرار */}
-
-      <div
-        className="no-print"
-        style={{
-          display: "flex",
-          gap: "8px",
-          padding: "12px 0",
-        }}
-      >
-        <button
-          onClick={() => window.print()}
-          style={{
-            flex: 1,
-            padding: "12px",
-            border: "none",
-            borderRadius: "10px",
-            background: "#00509e",
-            color: "white",
-            fontWeight: 700,
-            fontSize: "0.85rem",
-            cursor: "pointer",
-            fontFamily: "Cairo, sans-serif",
-          }}
-        >
-          🖨️ طباعة PDF
-        </button>
+      <div className="no-print" style={{ display: "flex", gap: "8px", padding: "12px 0" }}>
+        <button onClick={() => window.print()} style={{ flex: 1, padding: "12px", border: "none", borderRadius: "10px", background: "#00509e", color: "white", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", fontFamily: "Cairo, sans-serif" }}>🖨️ طباعة PDF</button>
       </div>
     </div>
   );
