@@ -167,7 +167,7 @@ const Txt = ({ label, value, unit, flex, editable, onChange }: any) => (
       <input
         type="text"
         value={value}
-        onChange={e => onChange(e.target.value)}
+     onChange={(e) => onChange(e.target.value)}
         onFocus={e => e.target.select()}
         style={{ width: '100%', border: 'none', textAlign: 'center', fontSize: '0.85rem', padding: '2px 0', outline: 'none', background: 'transparent', fontWeight: 700, fontFamily: 'Cairo, sans-serif' }}
         placeholder="اسم البند"
