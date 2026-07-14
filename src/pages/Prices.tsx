@@ -160,24 +160,35 @@ const Num = ({ label, value, set, unit, inputRef, onKeyDown, flex }: any) => {
   );
 };
 
-const Txt = ({ label, value, unit, flex, editable, onChange }: any) => (
-  <div style={{ flex: flex || 1, background: '#fdfdfd', border: '1px solid #ddd', borderRadius: '8px', padding: '8px 5px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-    <label style={{ fontSize: '0.6rem', color: '#003366', display: 'block', marginBottom: '2px', fontWeight: 700, whiteSpace: 'normal', wordBreak: 'break-word', minHeight: '14px' }}>{label}</label>
-    {editable ? (
-      <input
-        type="text"
-        value={value}
-     onChange={(e) => onChange(e.target.value)}
-        onFocus={e => e.target.select()}
-        style={{ width: '100%', border: 'none', textAlign: 'center', fontSize: '0.85rem', padding: '2px 0', outline: 'none', background: 'transparent', fontWeight: 700, fontFamily: 'Cairo, sans-serif' }}
-        placeholder="اسم البند"
-      />
-    ) : (
-      <span style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'Cairo, sans-serif', whiteSpace: 'normal', wordBreak: 'break-word', padding: '2px 0' }}>{value}</span>
-    )}
-    {unit && <span style={{ fontSize: '0.55rem', color: '#888', display: 'block', marginTop: '2px' }}>{unit}</span>}
-  </div>
-);
+const Txt = ({ label, value, unit, flex, editable, onChange }: any) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  
+  const handleBlur = () => {
+    if (inputRef.current && onChange) {
+      onChange(inputRef.current.value);
+    }
+  };
+
+  return (
+    <div style={{ flex: flex || 1, background: '#fdfdfd', border: '1px solid #ddd', borderRadius: '8px', padding: '8px 5px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <label style={{ fontSize: '0.6rem', color: '#003366', display: 'block', marginBottom: '2px', fontWeight: 700, whiteSpace: 'normal', wordBreak: 'break-word', minHeight: '14px' }}>{label}</label>
+      {editable ? (
+        <input
+          ref={inputRef}
+          type="text"
+          defaultValue={value}
+          onBlur={handleBlur}
+          onFocus={e => e.target.select()}
+          style={{ width: '100%', border: 'none', textAlign: 'center', fontSize: '0.85rem', padding: '2px 0', outline: 'none', background: 'transparent', fontWeight: 700, fontFamily: 'Cairo, sans-serif' }}
+          placeholder="اسم البند"
+        />
+      ) : (
+        <span style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'Cairo, sans-serif', whiteSpace: 'normal', wordBreak: 'break-word', padding: '2px 0' }}>{value}</span>
+      )}
+      {unit && <span style={{ fontSize: '0.55rem', color: '#888', display: 'block', marginTop: '2px' }}>{unit}</span>}
+    </div>
+  );
+};
 
 const Sel = ({ label, value, onChange, options, inputRef, onKeyDown, width }: any) => (
   <div style={{ width: width || '80px', background: '#fdfdfd', border: '1px solid #ddd', borderRadius: '8px', padding: '8px 5px', textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
