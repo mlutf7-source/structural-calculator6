@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { n, fmtNum, goNext } from '../utils/constants';
 
 const G = (k: string) => { try { const s = localStorage.getItem(k); return s ? JSON.parse(s) : null; } catch (e) { return null; } };
@@ -85,6 +85,11 @@ const QuickCalc: React.FC = () => {
   const [designFloors, setDesignFloors] = useState(saved.designFloors || '4');
   const [buildFloors, setBuildFloors] = useState(saved.buildFloors || '2');
 
+  // ✅ حفظ المدخلات تلقائياً
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ length, width, floorHeight, apartments, designFloors, buildFloors }));
+  }, [length, width, floorHeight, apartments, designFloors, buildFloors]);
+
   const L = n(length), W = n(width), FH = n(floorHeight);
   const APT = n(apartments), DF = n(designFloors), BF = n(buildFloors);
   const area = L * W, perimeter = 2 * (L + W);
@@ -94,6 +99,12 @@ const QuickCalc: React.FC = () => {
   const cur = prices.currency === 'YER' ? 'ر.ي' : prices.currency === 'SAR' ? 'ر.س' : '$';
   const gp = (arr: any[], i: number) => n(arr?.[i]?.price || '0');
   const fm = prices.finishesMaterials || [], fl = prices.finishesLabor || [], fe = prices.finishesExtra || [], lab = prices.labor || [];
+
+  // ✅ سعر الحديد - يدعم الموحد والمنفصل
+  const getSteelPrice = () => {
+    if (prices.steelMode === 'unified') return n(prices.steelUnified || '3500');
+    return gp(prices.steel || [], 0); // متوسط سعر أول قطر
+  };
 
   // القواعد
   const totalLoad = area * 1.5 * DF;
@@ -181,10 +192,12 @@ const QuickCalc: React.FC = () => {
   const totalCement = blockCement + plasterCement + mortarCement;
   const totalSand = blockSand + plasterSand + mortarSand;
 
-  // أسعار الوحدة
+  // ✅ أسعار الوحدة - معالجة سعر الحديد الموحد
+  const steelPrice = getSteelPrice();
   const concUnit = gp(prices.concrete || [], 1) + gp(lab, 0);
-  const steelUnit = gp(prices.steel || [], 0) + gp(lab, 2);
-  const blockUnit = gp(fm, 0) + gp(fl, 0);
+  const steelUnit = steelPrice + gp(lab, 2);
+  const blockUnit = gp(fm, 0);
+  const blockLaborUnit = gp(fl, 0);
   const cementUnit = gp(fm, 2);
   const sandUnit = gp(fm, 3);
   const plasterLaborUnit = gp(fl, 2);
@@ -199,10 +212,11 @@ const QuickCalc: React.FC = () => {
   const bathUnit = gp(fe, 0);
   const kitchenUnit = gp(fe, 1);
 
-  // التكاليف
+  // ✅ التكاليف - مع عمالة البلوك منفصلة
   const concCost = totalConcrete * concUnit;
   const steelCost = totalSteel * steelUnit;
   const blockCost = totalBlocks * blockUnit;
+  const blockLaborCost = (netOuterWall + netInnerWall) * blockLaborUnit;
   const cementCost = totalCement * cementUnit;
   const sandCost = totalSand * sandUnit;
   const plasterLaborCost = plasterArea * plasterLaborUnit;
@@ -216,7 +230,7 @@ const QuickCalc: React.FC = () => {
   const doorCost = totalDoors * doorUnit;
   const bathCost = totalBaths * bathUnit;
   const kitchenCost = totalKitchens * kitchenUnit;
-  const grandTotal = concCost + steelCost + blockCost + cementCost + sandCost + plasterLaborCost + paintLaborCost + tileCost + puttyCost + primerCost + paintCost + stairCost + windowCost + doorCost + bathCost + kitchenCost;
+  const grandTotal = concCost + steelCost + blockCost + blockLaborCost + cementCost + sandCost + plasterLaborCost + paintLaborCost + tileCost + puttyCost + primerCost + paintCost + stairCost + windowCost + doorCost + bathCost + kitchenCost;
 
   const reset = () => { setLength(''); setWidth(''); setFloorHeight(''); setApartments(''); setDesignFloors(''); setBuildFloors(''); };  return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -287,6 +301,7 @@ const QuickCalc: React.FC = () => {
         ['الخرسانة', `${fmtNum(totalConcrete)} م³`, `${fmtNum(concUnit)} ${cur}`, `${fmtNum(concCost)} ${cur}`],
         ['الحديد', `${fmtNum(totalSteel)} طن`, `${fmtNum(steelUnit)} ${cur}`, `${fmtNum(steelCost)} ${cur}`],
         ['البلوك', `${totalBlocks} بلوكة`, `${fmtNum(blockUnit)} ${cur}`, `${fmtNum(blockCost)} ${cur}`],
+        ['بناء البلوك', `${fmtNum(netOuterWall + netInnerWall)} م²`, `${fmtNum(blockLaborUnit)} ${cur}`, `${fmtNum(blockLaborCost)} ${cur}`],
         ['الأسمنت', `${totalCement} كيس`, `${fmtNum(cementUnit)} ${cur}`, `${fmtNum(cementCost)} ${cur}`],
         ['الرمل', `${fmtNum(totalSand)} م³`, `${fmtNum(sandUnit)} ${cur}`, `${fmtNum(sandCost)} ${cur}`],
         ['أجور التلييس', `${fmtNum(plasterArea)} م²`, `${fmtNum(plasterLaborUnit)} ${cur}`, `${fmtNum(plasterLaborCost)} ${cur}`],
