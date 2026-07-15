@@ -47,14 +47,28 @@ const SummaryTable = ({ title, headers, rows }: { title: string; headers: string
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem' }}>
           <thead><tr>{headers.map((h, i) => <th key={i} style={S.th}>{h}</th>)}</tr></thead>
           <tbody>
-            {rows.map((row, i) => (
-              <tr key={i}>
-                {row.map((cell: any, j: number) => {
-                  if (cell === '__TOTAL__') return <td key={j} style={{ ...S.td, ...S.total }} colSpan={cell.colSpan || 1}>{cell.label}</td>;
-                  return <td key={j} style={j === 0 ? S.tdLabel : S.td}>{cell}</td>;
-                })}
-              </tr>
-            ))}
+            {rows.map((row, i) => {
+              const firstCell = row[0];
+              const isHeader = typeof firstCell === 'object' && firstCell?.colSpan === headers.length;
+              const isTotal = typeof firstCell === 'object' && firstCell?.colSpan !== headers.length;
+              if (isHeader) {
+                return (
+                  <tr key={i}>
+                    <td style={{ ...S.tdLabel, textAlign: 'center' }} colSpan={headers.length}>{firstCell.label}</td>
+                  </tr>
+                );
+              }
+              return (
+                <tr key={i} style={isTotal ? S.total : undefined}>
+                  {row.map((cell: any, j: number) => {
+                    if (typeof cell === 'object' && cell !== null) {
+                      return <td key={j} style={isTotal ? { ...S.td, ...S.total } : S.td} colSpan={cell.colSpan || 1}>{cell.label}</td>;
+                    }
+                    return <td key={j} style={j === 0 ? S.tdLabel : S.td}>{cell}</td>;
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -84,7 +98,6 @@ const QuickCalc: React.FC = () => {
   // القواعد
   const totalLoad = area * 1.5 * DF;
   const footingArea = totalLoad / 20;
-  const footingCount = Math.ceil(area / 12);
   const footingConcrete = footingArea * 0.5;
   const levelingConcrete = footingArea * 0.1;
   const footingSteel = footingConcrete * 0.090;
