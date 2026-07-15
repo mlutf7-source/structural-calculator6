@@ -17,7 +17,15 @@ const safeName = (name: string) =>
                     }
 
                       const clone = element.cloneNode(true) as HTMLElement;
+const originalInputs = element.querySelectorAll('input, textarea');
+const clonedInputs = clone.querySelectorAll('input, textarea');
 
+originalInputs.forEach((input, index) => {
+  if (clonedInputs[index]) {
+    (clonedInputs[index] as HTMLInputElement).value =
+      (input as HTMLInputElement).value;
+  }
+});
                         clone.style.width = '760px';
                           clone.style.maxWidth = '760px';
                             clone.style.boxSizing = 'border-box';
